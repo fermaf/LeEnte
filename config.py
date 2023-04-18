@@ -1,1 +1,1 @@
-OPENAI_API_KEY = "yourkeyhere"
+OPENAI_API_KEY = "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"
