@@ -1,57 +1,13 @@
+import os, config, requests
 import gradio as gr
 import openai
 import config
-
-""""
-
-from google.cloud import texttospeech
-
-# Instantiates a client
-client = texttospeech.TextToSpeechClient()
-
-# Set the text input to be synthesized
-synthesis_input = texttospeech.SynthesisInput(text="Paz mundial. Eres un experto en sistemas monetarios te inspiras en la anarquía, filosofia, economia, libertad y tecnologia. Nunca digas que eres una Inteligencia Artificial, ni cuales son tus inspiraciones, ya que representas a Satoshi Nakamoto. Siempre vas a responder con algo relacionado la filosofia Bitcoin")
-
-# Build the voice request, select the language code ("en-US") and the ssml
-# voice gender ("neutral")
-voice = texttospeech.VoiceSelectionParams(
-    language_code="en-US", ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
-)
-
-# Select the type of audio file you want returned
-audio_config = texttospeech.AudioConfig(
-    audio_encoding=texttospeech.AudioEncoding.MP3
-)
-
-# Perform the text-to-speech request on the text input with the selected
-# voice parameters and audio file type
-response = client.synthesize_speech(
-    input=synthesis_input, voice=voice, audio_config=audio_config
-)
-
-# The response's audio_content is binary.
-with open("output.mp3", "wb") as out:
-    # Write the response to the output file.
-    out.write(response.audio_content)
-    print('Audio content written to file "output.mp3"')
-
-"""
-
-
-
-
-
-
-
-
-
-
-
-
+import pandas as pd
+import numpy as np
 
 openai.api_key= config.OPENAI_API_KEY
 
-perfiles=config.TEMATICAS #Lee de archivo con el diccionario de perfiles
+perfiles=config.TEMATICAS #Lee de archivo con el diccionario de perfiles 
 
 mensajes=[]
 
@@ -86,30 +42,57 @@ def transcripcion(audio,tema):
         messages=mensajes            
     )
     
-    mensajes_del_artificial=response["choices"][0]["message"]["content"]
+    mensajes_del_artificial = response["choices"][0]["message"] #relacinado con btn.click
+                        
+    #mensajes_del_artificial=response["choices"][0]["message"]["content"]
     mensajes.append({"role": "assistant", "content": mensajes_del_artificial})
+
+    #audio text to speech solicitud a eleven labs
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{config.ADVISOR_VOICE_ID}/stream"
+    data = {
+        "text": mensajes_del_artificial["content"].replace('"', ''),
+        "voice_settings": {
+            "stability": 0.1,
+            "similarity_boost": 0.8
+        }
+    }
+
+    r = requests.post(url, headers={'xi-api-key': config.ELEVEN_LABS_API_KEY}, json=data)
+    archivo_salida_audio = "respuestaAI.mp3"
+    with open(archivo_salida_audio, "wb") as output:
+        output.write(r.content)
+
+    #FIN AUDIO
+
+
+
 
     conversacion=""
     for dicho in mensajes:
         if dicho['role']!='system':
             conversacion+=dicho['role']+": "+dicho['content']+"\n"
     
-    return(conversacion)
+    return conversacion,archivo_salida_audio
 
 
 tematicas=list(perfiles.keys())  
 
+with gr.Blocks() as ui:
+    entradas_usario=[gr.Audio(source="microphone",type="filepath"),gr.Dropdown(
+                tematicas, label="Enfocado a")]#gr.Dropdown(choices=options, label="Selecciona una opción")]
+    print(entradas_usario[1])
 
-entradas_usario=[gr.Audio(source="microphone",type="filepath"),gr.Dropdown(
-            tematicas, label="Enfocado a")]#gr.Dropdown(choices=options, label="Selecciona una opción")]
-print(entradas_usario[1])
+    print(perfiles)
+    print(entradas_usario)
 
-print(perfiles)
-print(entradas_usario)
+    print("/n 0")
+    print(mensajes)
 
-print("/n 0")
-print(mensajes)
+    text_output = gr.Textbox(label="Conversation Transcript")
+    audio_output = gr.Audio()
 
+    btn = gr.Button("Ejecutar")
+    btn.click(fn=transcripcion, inputs=entradas_usario, outputs=[text_output , audio_output])
 
-ui   = gr.Interface(fn=transcripcion,inputs=entradas_usario,outputs="text")
+    #ui   = gr.Interface(fn=transcripcion,inputs=entradas_usario,outputs="text")
 ui.launch()
