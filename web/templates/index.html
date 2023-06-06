@@ -1,0 +1,68 @@
+<!-- 
+  https://codepen.io/onefastsnail/pen/dJrJqz
+  https://codepen.io/mimikos/pen/wKqyqY
+  https://codepen.io/RiadhTahraoui/pen/xoBeWr
+
+
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Cabin+Sketch&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Palanquin:400,600'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_index.css') }}">
+  </head>
+  <body>
+      <div> <h1>DIJUR</h1> </div>
+      <canvas id="projector">Use browser como Brave, Chrome, Firefox</canvas>
+
+
+
+      <div class="file-upload">
+        <label for="file-input">
+          <i class="fa fa-upload file-upload-icon fa-3x" aria-hidden="true"></i>
+   
+        </label>
+        <form id="upload-form" action="/cargar" method="POST" enctype="multipart/form-data">
+          <input id="file-input" type="file" name="archivo" accept=".xlsx">
+          <input type="submit" value="Cargar">
+        </form>
+      </div>
+      
+  
+      <img class="corner-image" src="{{ url_for('static', filename='dijur2.png') }}" alt="DIJUR">
+  
+      <script src='https://code.createjs.com/easeljs-0.7.1.min.js'></script>
+      <script src='//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js'></script>
+      
+      <script src="{{ url_for('static', filename='script.js') }}" ></script>
+
+
+
+      <script>
+       document.getElementById('file-input').addEventListener('change', function() {
+        document.getElementById('upload-form').submit();
+  });
+      </script>
+<!--
+<script>
+      document.getElementById('file-input').addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+          const form = new FormData();
+          form.append('archivo', file);
+          fetch('/cargar', { method: 'POST', body: form });
+        }
+      });
+  
+    </script>
+  -->
+  </body>
+</html>
+
+
+
+

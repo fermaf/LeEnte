@@ -129,7 +129,7 @@ def busca_datos(esMetaData,esRecurisivo=False):
 
 
 # Recorrer las filas de la hoja de Excel
-for indice, fila in enumerate(hoja_excel.iter_rows(min_row=65, min_col=8, max_col=8, values_only=True), start=4): #max_row=80,
+for indice, fila in enumerate(hoja_excel.iter_rows(min_row=4, min_col=8, max_col=8, values_only=True), start=4): #max_row=80,
     # Obtener la dirección web que está en la columna F
     url = fila[0]
     #print("URL= ",url)
