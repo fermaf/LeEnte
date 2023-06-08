@@ -136,3 +136,24 @@ html, body{
     opacity: 0.5;
     filter: blur(0px);
   }
+
+
+  #botonHome  {
+    background-color: #495b81; /* Color de fondo */
+    border: none; /* Sin borde */
+    color: white; /* Color de texto */
+    padding: 12px 24px; /* Espaciado interno */
+    text-align: center; /* Alineación de texto */
+    text-decoration: none; /* Sin subrayado */
+    display: inline-block; /* Mostrar como bloque en línea */
+    font-size: 14px; /* Tamaño de fuente */
+    border-radius: 8px; /* Bordes redondeados */
+    transition-duration: 0.4s; /* Duración de transición */
+    cursor: pointer; /* Cambio de cursor al pasar el mouse */
+    margin-left: 60px;
+    margin-top: 40px;
+  }
+  
+  #botonHome:hover {
+    background-color: #627963; /* Color de fondo al pasar el mouse */
+  }

@@ -1,9 +1,9 @@
 <!-- https://codepen.io/kathykato/pen/rZRaNe <---- el boton de download -->
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Button Hover</title>
+  <title>Descarga archivo revisado</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_download.css') }}">
 
 </head>
@@ -21,11 +21,27 @@
         </button>
       </a>
     </div>
+    <button id="botonHome" style="display: none;">Home</button>
   </div>
 
 
   
 <img class="corner-image" src="{{ url_for('static', filename='dijur2.png') }}" alt="DIJUR">
+
+
+<script>
+    const descargarBtn = document.querySelector('.learn-more');
+    const regresarBtn = document.getElementById('botonHome');
+  
+    descargarBtn.addEventListener('click', function() {
+      regresarBtn.style.display = 'block';
+    });
+  
+    regresarBtn.addEventListener('click', function() {
+      window.location.href = '/';
+    });
+  </script>
+
 
 
 </body>
