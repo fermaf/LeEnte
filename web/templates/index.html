@@ -1,7 +1,7 @@
 <!-- 
-  https://codepen.io/onefastsnail/pen/dJrJqz
-  https://codepen.io/mimikos/pen/wKqyqY
-  https://codepen.io/RiadhTahraoui/pen/xoBeWr
+  https://codepen.io/mimikos/pen/wKqyqY  <-- fondo suvae burbujas piola
+  https://codepen.io/RiadhTahraoui/pen/xoBeWr  <-- titulo radactivo
+https://codepen.io/motorlatitude/pen/AGOGeK  <--- loading BD
 
 
 -->
@@ -16,6 +16,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_index.css') }}">
   </head>
   <body>
+
+  <div id="contenido-a-reemplazar">
       <div> <h1>DIJUR</h1> </div>
       <canvas id="projector">Use browser como Brave, Chrome, Firefox</canvas>
 
@@ -31,7 +33,27 @@
           <input type="submit" value="Cargar">
         </form>
       </div>
-      
+    </div>
+
+     
+
+    <div id="cargando2" class='marco' style="display: none;">
+      <div class="text">
+        buscando en BCN... (paciencia)
+      </div>
+      <div class="box">
+        <div class="comp"></div>
+        <div class="loader"></div>
+        <div class="con"></div>
+        <div class="byte"></div>
+        <div class="server"></div>
+      </div>
+    </div>
+
+    
+
+
+
   
       <img class="corner-image" src="{{ url_for('static', filename='dijur2.png') }}" alt="DIJUR">
   
@@ -43,8 +65,11 @@
 
 
       <script>
-       document.getElementById('file-input').addEventListener('change', function() {
+        document.getElementById('file-input').addEventListener('change', function() {
         document.getElementById('upload-form').submit();
+        document.getElementById('contenido-a-reemplazar').style.display = 'none';
+        document.getElementById('cargando2').style.display = 'block'
+       ;
   });
       </script>
 <!--

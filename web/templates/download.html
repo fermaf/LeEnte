@@ -1,0 +1,32 @@
+<!-- https://codepen.io/kathykato/pen/rZRaNe <---- el boton de download -->
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Button Hover</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_download.css') }}">
+
+</head>
+<body>
+
+
+<div> 
+    <div id="container">
+      <a href="{{ url_for('download_file', archivo=archivo) }}" class="learn-more">
+        <button class="learn-more">
+          <span class="circle" aria-hidden="true">
+            <span class="icon arrow"></span>
+          </span>
+          <span class="button-text">Descargar</span>
+        </button>
+      </a>
+    </div>
+  </div>
+
+
+  
+<img class="corner-image" src="{{ url_for('static', filename='dijur2.png') }}" alt="DIJUR">
+
+
+</body>
+</html>

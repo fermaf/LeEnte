@@ -1,3 +1,6 @@
+#Al ejeuctar esta app directamente, busca en el directorio local archivo "marco_normativo.xls", al finaliar de procesarlos lo escribe en el mismo directorio y nombre.
+
+
 # Web service de Ley Chile para desarrolladores
 # https://www.bcn.cl/leychile/consulta/legislacion_abierta_web_service
 #
@@ -129,7 +132,7 @@ def busca_datos(esMetaData,esRecurisivo=False):
 
 
 # Recorrer las filas de la hoja de Excel
-for indice, fila in enumerate(hoja_excel.iter_rows(min_row=4, min_col=8, max_col=8, values_only=True), start=4): #max_row=80,
+for indice, fila in enumerate(hoja_excel.iter_rows(min_row=4,max_row=6, min_col=8, max_col=8, values_only=True), start=4): #max_row=80,
     # Obtener la dirección web que está en la columna F
     url = fila[0]
     #print("URL= ",url)
@@ -198,5 +201,6 @@ for indice, fila in enumerate(hoja_excel.iter_rows(min_row=4, min_col=8, max_col
 
     else:
         hoja_excel.cell(row=indice, column=ultima_columna+1).font = Font(color="FF0000")  # cambia color rojo Id_version existe en el URL orginal del archivo excel (lo que quiere decir que está revisando una fecha fija no la ultima)
-        hoja_excel.cell(row=indice, column=ultima_columna+1, value="No es una URL de BCN.cl o LeyChile.cl")           
+        hoja_excel.cell(row=indice, column=ultima_columna+1, value="No es una URL de BCN.cl o LeyChile.cl")
+print ("_FIN_DATOS_")           
 archivo_excel.save(filename='marco_normativo.xlsx')
